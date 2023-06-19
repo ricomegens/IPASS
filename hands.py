@@ -1,7 +1,7 @@
 import cards as cr
 import poker as pl
 import player as pr
-import combinations from itertools
+from itertools import combinations
 
 def cards_out_of_play(player):
     hand = [card for card in player.hand]
