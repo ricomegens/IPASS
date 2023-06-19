@@ -1,4 +1,4 @@
-import play as pl
+import poker as pl
 
 class Player:
     def __init__(self, name):

@@ -54,61 +54,6 @@ class Poker:
         winner.update(self.pot)
         return
 
-    def calculate_hands(self, player, table):
-        all_cards = player.hand + table
-        values = [card.ranking() for card in all_cards]
-        suits = [card.suit for card in all_cards]
-
-        if self.royal_flush(values, suits):
-            return 10
-        elif self.straight_flush(values, suits):
-            return 9
-        elif self.four_of_a_kind(values):
-            return 8
-        elif self.full_house(values):
-            return 7
-        elif self.flush(suits):
-            return 6
-        elif self.straight(values, suits):
-            return 5
-        elif self.three_of_a_kind(values):
-            return 4
-        elif self.two_pair(values):
-            return 3
-        elif self.pair(values):
-            return 2
-        else:
-            return 1
-
-    def royal_flush(self, values, suits):
-        return self.flush(suits) and set(values) == {10, 11, 12, 13, 14}
-
-    def straight_flush(self, values, suits):
-        return self.flush(suits) and max(values) - min(values) == 4
-
-    def four_of_a_kind(self, values):
-        return any(values.count(value) == 4 for value in values)
-
-    def full_house(self, values):
-        return self.is_three_of_a_kind(values) and self.is_pair(values)
-
-    def flush(self, suits):
-        if (suits.count(suit) == 1 for suit in suits):
-            return True
-        return False
-
-    def straight(self, values, suits):
-        return max(values) - min(values) == 4 and any(suits.count(suit) >= 2 for suit in suits)
-
-    def three_of_a_kind(self, values):
-        return any(values.count(value) == 3 for value in values)
-
-    def two_pair(self, values):
-        return sum(values.count(value) == 2 for value in values) == 4
-
-    def pair(self, values):
-        return any(values.count(value) == 2 for value in values)
-
     def pre_flop(self, players):
         for player in players:
             self.add_player(player)
