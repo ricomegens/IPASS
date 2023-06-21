@@ -5,8 +5,10 @@ class Player:
         self.name = name
         self.hand = []
         self.money = 0
-        self.hand_rank = None
         self.poker = pl.Poker()
+
+    def update_money(self, value):
+        self.money += value
 
     def update_hand(self, cards):
         for card in cards:
@@ -14,7 +16,7 @@ class Player:
 
     def check(self):
         self.poker.update_pot(self.poker.current_bet)
-        self.money -= self.poker.current_bet
+        self.update_money(-self.poker.current_bet)
         return
 
     def fold(self):
@@ -22,15 +24,11 @@ class Player:
         self.poker.remove_player(self)
         return
 
-    def raise_pot(self):
-        quantity = input("How much do you want to raise: ")
-        while quantity != int:
+    def raise_pot(self, value):
+        if type(value) != int or type(value) != float:
             print("Wrong input")
-            quantity = input("How much do you want to raise: ")
-        self.poker.update_pot(self.poker.current_bet + quantity)
-        self.poker.current_bet += quantity
-        self.money -= self.poker.current_bet
+            return False
+        self.poker.update_pot(self.poker.current_bet + value)
+        self.poker.current_bet += value
+        self.update_money(-(self.poker.current_bet + value))
         return
-
-    def update_money(self, value):
-        self.money += value

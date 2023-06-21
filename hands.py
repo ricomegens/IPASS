@@ -11,15 +11,15 @@ def cards_in_play(player):
 def opp_starts(player):
     return list(combinations(cards_in_play(player), 2))
 
-def potential_table(comm_cards):
+def potential_table(comm_cards, player):
     if len(comm_cards) == 3:
-        new = list(combinations(cards_class.cards, 2))
+        new = list(combinations(cards_in_play(player), 2))
         for new_table_cards in new:
             new_table_cards = list(new_table_cards)
             new_table_cards + comm_cards
         return new
     if len(comm_cards) == 4:
-        new = list(combinations(cards_class.cards, 1))
+        new = list(combinations(cards_in_play(player), 1))
         for new_table_cards in new:
             new_table_cards = list(new_table_cards)
             new_table_cards + comm_cards
@@ -29,5 +29,4 @@ def potential_table(comm_cards):
 if __name__ == "__main__":
     cards_class = cr.Deck()
     poker_class = pl.Poker()
-    player1 = pr.Player("Rico")
     opp_starts()
