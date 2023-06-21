@@ -1,32 +1,23 @@
 import random
 
 class Card:
-    def __init__(self, suit, value):
+    def __init__(self, suit, value, ranking):
         self.suit = suit
         self.value = value
-
-    def ranking(self):
-        if len(self.value) == 1:
-            return int(self.value)
-        elif self.value == "Ace":
-            return 14
-        elif self.value == "Jack":
-            return 10
-        elif self.value == "Queen":
-            return 11
-        elif self.value == "King":
-            return 12
+        self.ranking = ranking
 
 class Deck:
     def __init__(self):
         self.suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
-        self.values = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
-        self.cards = [Card(suit, value) for suit in self.suits for value in self.values]
+        self.values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
+        self.cards = []
 
     def reset(self):
-        suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
-        values = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
-        self.cards = [(suit, value, ranking) for suit in suits for value in values for ranking in range(1, 15)]
+        for suit in self.suits:
+            ranking = 2
+            for value in self.values:
+                self.cards.append(Card(suit, value, ranking))
+                ranking += 1
 
     def shuffle(self):
         random.shuffle(self.cards)
@@ -37,4 +28,10 @@ class Deck:
         else:
             return None
 
-
+if __name__ == "__main__":
+    deck = Deck()
+    print(len(deck.cards))
+    deck.reset()
+    print(len(deck.cards))
+    deck.deal()
+    print(len(deck.cards))

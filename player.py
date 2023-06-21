@@ -10,9 +10,8 @@ class Player:
     def update_money(self, value):
         self.money += value
 
-    def update_hand(self, cards):
-        for card in cards:
-            self.hand.append(card)
+    def update_hand(self, card):
+        self.hand.append(card)
 
     def check(self):
         self.poker.update_pot(self.poker.current_bet)
@@ -32,3 +31,6 @@ class Player:
         self.poker.current_bet += value
         self.update_money(-(self.poker.current_bet + value))
         return
+
+if __name__ == "__main__":
+    player1 = Player("Rico")
