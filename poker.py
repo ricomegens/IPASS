@@ -81,7 +81,7 @@ class Poker:
     def evaluate_win(self):
         player_scores = {}
         for player in self.players:
-            score = evaluate.rank(player, self.table_cards)
+            score = evaluate.rank(player.hand, self.table_cards)
             player_scores.update({player : score})
 
         top_scorers = []

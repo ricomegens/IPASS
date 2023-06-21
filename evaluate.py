@@ -29,11 +29,11 @@ def two_pair(values):
 def pair(values):
     return any(values.count(value) == 2 for value in values)
 
-def rank(player, comm_cards):
-    all_cards = player.hand + comm_cards
+def rank(hand, comm_cards):
+    all_cards = hand + comm_cards
     all_possible_hands = list(combinations(all_cards, 5))
-    for hand in all_possible_hands:
-        values, suits = list(card.value for card in hand), list(card.suit for card in hand)
+    for one_hand in all_possible_hands:
+        values, suits = list(card.ranking for card in one_hand), list(card.suit for card in one_hand)
         if royal_flush(values, suits):
             return 10
         elif straight_flush(values, suits):
