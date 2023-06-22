@@ -8,7 +8,7 @@ class Card:
 
 class Deck:
     def __init__(self):
-        self.suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
+        self.suits = ["H", "D", "C", "S"]
         self.values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
         self.cards = []
 
@@ -29,9 +29,5 @@ class Deck:
             return None
 
 if __name__ == "__main__":
-    deck = Deck()
-    print(len(deck.cards))
-    deck.reset()
-    print(len(deck.cards))
-    deck.deal()
-    print(len(deck.cards))
+    test = Deck()
+    test.reset()
