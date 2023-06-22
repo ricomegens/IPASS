@@ -1,32 +1,37 @@
 import cards as cr
 import poker as pl
-import player as pr
 from itertools import combinations
+def cards_in_play(own_cards, comm_cards, deck):
+    hand = [card for card in own_cards]
+    community = [card for card in comm_cards]
+    known = hand + community
+    for card in known:
+        if card in deck:
+            deck.remove(card)
+    return deck
 
-def cards_in_play(player):
-    hand = [card for card in player.hand]
-    comm_cards = [card for card in poker_class.table_cards]
-    return cards_class.cards - (hand + comm_cards)
+def opp_starts(own_cards, comm_cards, deck):
+    combis = list(combinations(cards_in_play(own_cards, comm_cards, deck), 2))
+    combi = [list(combi) for combi in combis]
+    return combi
 
-def opp_starts(player):
-    return list(combinations(cards_in_play(player), 2))
-
-def potential_table(comm_cards, player):
-    if len(comm_cards) == 3:
-        new = list(combinations(cards_in_play(player), 2))
-        for new_table_cards in new:
-            new_table_cards = list(new_table_cards)
-            new_table_cards + comm_cards
-        return new
-    if len(comm_cards) == 4:
-        new = list(combinations(cards_in_play(player), 1))
-        for new_table_cards in new:
-            new_table_cards = list(new_table_cards)
-            new_table_cards + comm_cards
-        return new
+def potential_full_table(own_cards, comm_cards, deck):
+    table = 5
+    known = len(comm_cards)
+    amount_of_cards_to_come = 5 - known
+    cards_to_come = list(combinations(cards_in_play(own_cards, comm_cards, deck), amount_of_cards_to_come))
+    potential_full_tables = []
+    for new_comm_cards in cards_to_come:
+        new_comm_cards = list(new_comm_cards)
+        potential_full_tables.append(list(new_comm_cards + comm_cards))
+    return potential_full_tables
 
 
 if __name__ == "__main__":
-    cards_class = cr.Deck()
     poker_class = pl.Poker()
-    opp_starts()
+    a = cr.Deck()
+    a.reset()
+    dk = a.cards
+    player_hand = [dk[30], dk[8]]
+    community = [dk[12], dk[49], dk[21]]
+    print(len(opp_starts(player_hand, community, dk)))
