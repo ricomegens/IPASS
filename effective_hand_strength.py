@@ -1,20 +1,25 @@
-import cards as cr
-import poker as pl
+import player
+import poker
 import hands
 import evaluate
 
 class EHS:
-    def __init__(self, player):
-        self.ehs = self.hand_strength(player, poker_class.table_cards) \
-                   * (1 - self.hand_potential(player, poker_class.table_cards)[1])\
-                   + (1 - self.hand_strength(player, poker_class.table_cards)) \
-                   * self.hand_potential(player, poker_class.table_cards)[0]
+    def __init__(self, hand, comm_cards, deck):
+        self.hand = hand
+        self.comm_cards = comm_cards
+        self.deck = deck
 
-    def hand_strength(self, player, comm_cards):
+    def effective_hand_strength(self):
+        return self.hand_strength() \
+                   * (1 - self.hand_potential()[1])\
+                   + (1 - self.hand_strength()) \
+                   * self.hand_potential()[0]
+
+    def hand_strength(self):
         ahead = tied = behind = 0
-        ourrank = self.rank(player, comm_cards)
-        for oppcards in hands.opp_starts(player):
-            opprank = self.rank(oppcards, comm_cards)
+        ourrank = evaluate.rank(self.hand, self.comm_cards)
+        for oppcards in hands.opp_starts(self.hand, self.comm_cards, self.deck):
+            opprank = evaluate.rank(oppcards, self.comm_cards)
             if ourrank > opprank:
                 ahead += 1
             elif ourrank == opprank:
@@ -25,13 +30,13 @@ class EHS:
         handstrength = (ahead + tied / 2) / (ahead + tied + behind)
         return handstrength
 
-    def hand_potential(self, player, comm_cards):
+    def hand_potential(self):
         HP = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]  # Hand potential array, initialize to 0
         HPTotal = [0, 0, 0]  # Initialize to 0
-        ourrank = self.rank(player, comm_cards)
+        ourrank = evaluate.rank(self.hand, self.comm_cards)
 
-        for oppcards in hands.opp_starts(player):
-            opprank = self.rank(oppcards, comm_cards)
+        for oppcards in hands.opp_starts(self.hand, self.comm_cards, self.deck):
+            opprank = evaluate.rank(oppcards, self.comm_cards)
             if ourrank > opprank:
                 index = 0  # ahead
             elif ourrank == opprank:
@@ -40,9 +45,9 @@ class EHS:
                 index = 2  # behind
             HPTotal[index] += 1
 
-            for future_board_cards in hands.potential_table(comm_cards, player):
-                ourbest = self.rank(player, future_board_cards)
-                oppbest = self.rank(oppcards, future_board_cards)
+            for future_board_cards in hands.potential_full_table(self.comm_cards, self.hand, self.deck):
+                ourbest = evaluate.rank(self.hand, future_board_cards)
+                oppbest = evaluate.rank(oppcards, future_board_cards)
                 if ourbest > oppbest:
                     HP[index][0] += 1  # ahead
                 elif ourbest == oppbest:
@@ -55,9 +60,13 @@ class EHS:
 
         return Ppot, Npot
 
-    def rank(self, player, comm_cards):
-        return evaluate.rank(player, comm_cards)
 
 if __name__ == "__main__":
-    poker_class = pl.Poker()
-    cards_deck = cr.Deck()
+    player1 = player.Player("Rico")
+    player2 = player.Player("Luffy")
+    game = poker.Poker([player1, player2])
+    dk = game.create_deck()
+    player_hand = [dk[0], dk[4]]
+    community = [dk[13], dk[21], dk[40]]
+    ehs = EHS(player_hand, community, dk)
+    print(ehs.effective_hand_strength())
