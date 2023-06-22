@@ -1,12 +1,12 @@
-import cards as deck
+import cards
 import player as pl
 import evaluate
 
 class Poker:
-    def __init__(self):
-        self.players = []
-        self.deck = deck.Deck()
-        self.table_cards = []
+    def __init__(self, players):
+        self.players = players
+        self.deck = cards.Deck()
+        self.comm_cards = []
         self.small_blind = 10
         self.big_blind = 20
         self.current_bet = self.big_blind
@@ -25,7 +25,6 @@ class Poker:
     def remove_player(self, player):
         if player in self.players:
             self.players.remove(player)
-            del player
             return True
         return False
 
@@ -38,9 +37,18 @@ class Poker:
         for player in self.players:
             player.reset_hand()
 
-    def deal_table_cards(self, num_cards):
+    def create_deck(self):
+        self.deck.reset()
+        self.deck.shuffle()
+        return self.deck.cards
+
+
+    def deal_comm_cards(self, num_cards):
         for card in range(num_cards):
-            self.table_cards.append(self.deck.deal())
+            self.comm_cards.append(self.deck.deal())
+
+    def reset_comm_cards(self):
+        self.comm_cards.clear()
 
     def move(self, player, action=None):
         while len(self.players) > 1:
@@ -52,9 +60,11 @@ class Poker:
             if action == "fold":
                 self.remove_player(player)
             elif action == "check":
+                player.update_money(-self.current_bet)
                 self.update_pot(self.current_bet)
             elif action == "raise":
                 self.current_bet += 10
+                player.update_money(-self.current_bet)
                 self.update_pot(self.current_bet)
             return True
         return False
@@ -84,7 +94,7 @@ class Poker:
     def evaluate_game(self):
         player_scores = {}
         for player in self.players:
-            score = evaluate.rank(player.hand, self.table_cards)
+            score = evaluate.rank(player.hand, self.comm_cards)
             player_scores.update({player : score})
         print(player_scores)
         top_scorers = []
@@ -106,20 +116,18 @@ class Poker:
         return winners
 
     def play(self):
-        self.deck.reset()
-        self.deck.shuffle()
+        self.create_deck()
         self.pre_flop()
         self.flop()
         self.turn()
         self.give_away_pot()
         self.reset_hand()
+        self.reset_table_cards()
 
 if __name__ == "__main__":
     player1 = pl.Player("Rico")
     player2 = pl.Player("Luffy")
-    game = Poker()
-    game.add_player(player1)
-    game.add_player(player2)
-    for i in range(6):
+    game = Poker([player1, player2])
+    for i in range(20):
         game.play()
 
