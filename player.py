@@ -13,15 +13,17 @@ class Player:
     def update_hand(self, card):
         self.hand.append(card)
 
+    def reset_hand(self):
+        self.hand.clear()
+
     def check(self):
         self.poker.update_pot(self.poker.current_bet)
         self.update_money(-self.poker.current_bet)
         return
 
     def fold(self):
-        del self.hand
         self.poker.remove_player(self)
-        return
+        self.hand.clear()
 
     def raise_pot(self, value):
         if type(value) != int or type(value) != float:
