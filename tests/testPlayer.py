@@ -2,7 +2,7 @@ from player import Player
 from cards import Card
 import unittest
 
-class TestPlayer:
+class TestPlayer(unittest.TestCase):
     def testMoney(self):
         player1 = Player("Rico")
         self.assertEqual(player1.money == 0)

@@ -1,7 +1,7 @@
 from cards import Card
 import unittest
 
-class TestCards:
+class TestCards(unittest.TestCase):
     def testSuit(self):
         card1 = Card("s", "a", 14)
         self.assertEqual(card1.suit, f"s")
