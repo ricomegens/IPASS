@@ -5,7 +5,6 @@ import evaluate
 class Poker:
     def __init__(self, players):
         self.players = players
-        self.deck = cards.Deck()
         self.comm_cards = []
         self.small_blind = 10
         self.big_blind = 20
@@ -38,10 +37,7 @@ class Poker:
             player.reset_hand()
 
     def create_deck(self):
-        self.deck.reset()
-        self.deck.shuffle()
-        return self.deck.cards
-
+        return cards.deck()
 
     def deal_comm_cards(self, num_cards):
         for card in range(num_cards):
@@ -77,17 +73,17 @@ class Poker:
             self.move(player, "check")
 
     def flop(self):
-        self.deal_table_cards(3)
+        self.deal_comm_cards(3)
         for player in self.players:
             self.move(player, action="check")
 
     def turn(self):
-        self.deal_table_cards(1)
+        self.deal_comm_cards(1)
         for player in self.players:
             self.move(player, action="check")
 
     def river(self):
-        self.deal_table_cards(1)
+        self.deal_comm_cards(1)
         for player in self.players:
             self.move(player, action="check")
 

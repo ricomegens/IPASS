@@ -6,28 +6,19 @@ class Card:
         self.value = value
         self.ranking = ranking
 
-class Deck:
-    def __init__(self):
-        self.suits = ["H", "D", "C", "S"]
-        self.values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
-        self.cards = []
+def deck():
+    suits = {"h", "d", "c", "s"}
+    values = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"}
+    full_deck = []
+    for suit in suits:
+        ranking = 2
+        for value in values:
+            full_deck.append(Card(suit, value, ranking))
+            ranking += 1
+    random.shuffle(full_deck)
+    return full_deck
 
-    def reset(self):
-        for suit in self.suits:
-            ranking = 2
-            for value in self.values:
-                self.cards.append(Card(suit, value, ranking))
-                ranking += 1
 
-    def shuffle(self):
-        random.shuffle(self.cards)
-
-    def deal(self):
-        if len(self.cards) > 0:
-            return self.cards.pop()
-        else:
-            return None
 
 if __name__ == "__main__":
-    test = Deck()
-    test.reset()
+    print(deck())
