@@ -82,7 +82,7 @@ def game_evaluate(players, comm_cards):
     highest_score = max(scores.values())
     print(highest_score)
     for key in scores.keys():
-        if key == highest_score:
+        if scores[key] == highest_score:
             return key
 
 if __name__ == "__main__":

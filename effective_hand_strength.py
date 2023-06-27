@@ -11,27 +11,11 @@ class EHS:
         self.deck = deck
 
     def effective_hand_strength(self):
-        hs = self.hand_strength()
         hp = self.hand_potential()
-        return hs \
+        return hp[2] \
                    * (1 - hp[1])\
-                   + (1 - hs) \
+                   + (1 - hp[2]) \
                    * hp[0]
-
-    def hand_strength(self):
-        ahead = tied = behind = 0
-        ourrank = evaluate.rank(self.hand, self.comm_cards)
-        for oppcards in cards_to_come.opp_starts(self.hand, self.comm_cards, self.deck):
-            opprank = evaluate.rank(oppcards, self.comm_cards)
-            if ourrank > opprank:
-                ahead += 1
-            elif ourrank == opprank:
-                tied += 1
-            else:
-                behind += 1
-
-        handstrength = (ahead + tied / 2) / (ahead + tied + behind)
-        return handstrength
 
     def hand_potential(self):
         HP = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]  # Hand potential array, initialize to 0
@@ -69,9 +53,10 @@ class EHS:
             else:
                 HP[index][2] += 1  # behind
 
+        hand_strength = (HPTotal[0] + 0.5 * HPTotal[1]) / sum(number for number in HPTotal)
         Ppot = (HP[2][0] + HP[2][1] / 2 + HP[1][0] / 2) / (HPTotal[2] + HPTotal[1])
         Npot = (HP[0][2] + HP[1][2] / 2 + HP[0][1] / 2) / (HPTotal[0] + HPTotal[1])
-        return Ppot, Npot
+        return Ppot, Npot, hand_strength
 
 if __name__ == "__main__":
     dk = cards.deck()
