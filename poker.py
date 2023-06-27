@@ -1,6 +1,6 @@
 import cards
 import player as pl
-import evaluate
+
 
 class Poker:
     def __init__(self):
