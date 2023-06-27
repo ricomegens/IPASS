@@ -47,21 +47,20 @@ class Poker:
     def reset_comm_cards(self):
         self.comm_cards.clear()
 
-    def move(self, action=None):
-        for player in self.players:
-            if not action:
-                action = input("How do you want to play\n")
-                while action != "fold" and action != "raise" and action != "check":
-                    action = input("Wrong input! How do you want to play\n")
-            if action == "fold":
-                self.remove_player(player)
-            elif action == "check":
-                player.update_money(-self.current_bet)
-                self.update_pot(self.current_bet)
-            elif action == "raise":
-                self.current_bet += 10
-                player.update_money(-self.current_bet)
-                self.update_pot(self.current_bet)
+    def move(self, player, action=None):
+        if not action:
+            action = input("How do you want to play\n")
+            while action != "fold" and action != "raise" and action != "check":
+                action = input("Wrong input! How do you want to play\n")
+        if action == "fold":
+            self.remove_player(player)
+        elif action == "check":
+            player.update_money(-self.current_bet)
+            self.update_pot(self.current_bet)
+        elif action == "raise":
+            self.current_bet += 10
+            player.update_money(-self.current_bet)
+            self.update_pot(self.current_bet)
 
     def give_away_pot(self, players):
         for player in players:

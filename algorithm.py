@@ -1,17 +1,36 @@
-import cards_to_come
+import cards_calculator
 import evaluate
 
 class Expectiminimax:
     def __init__(self, player, comm_cards):
         self.hand = player.hand
         self.comm_cards = comm_cards
+        self.hs = self.hand_strength()
+        self.ehs = self.effective_hand_strength()
+
+    def hand_strength(self):
+        ahead = tied = behind = 0
+        ourrank = evaluate.rank(self.hand, self.comm_cards)
+
+        all_possible_oppcards = cards_calculator.opp_starts(self.hand, self.comm_cards)
+        for opp_start in all_possible_oppcards:
+            opprank = evaluate.rank(opp_start, self.comm_cards)
+            if ourrank > opprank:
+                ahead += 1
+            elif ourrank == opprank:
+                tied += 1
+            else:
+                behind += 1
+
+        handstrength = (ahead + tied / 2) / (ahead + tied + behind)
+        return handstrength, ahead, tied, behind
 
     def effective_hand_strength(self):
         HP = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]  # Hand potential array, initialize to 0
         HPTotal = [0, 0, 0]  # Initialize to 0
         ourrank = evaluate.rank(self.hand, self.comm_cards)
 
-        all_opp_starts = cards_to_come.opp_starts(self.hand, self.comm_cards)
+        all_opp_starts = cards_calculator.opp_starts(self.hand, self.comm_cards)
         for oppcards in all_opp_starts:
             opprank = evaluate.rank(oppcards, self.comm_cards)
             if ourrank[0] > opprank[0]:
@@ -27,7 +46,7 @@ class Expectiminimax:
                 index = 2  # behind
             HPTotal[index] += 1
 
-            remaing_cards = cards_to_come.cards_left(self.hand, oppcards, self.comm_cards)
+            remaing_cards = cards_calculator.cards_left(self.hand, oppcards, self.comm_cards)
             ourbest = evaluate.rank(self.hand, remaing_cards)
             oppbest = evaluate.rank(oppcards, remaing_cards)
             if ourbest[0] > oppbest[0]:
@@ -56,7 +75,10 @@ class Expectiminimax:
         return result, situations_win, situations_tie, situations_lose
 
     def expectiminimax(self):
-        chance = EHS(self.hand, self.comm_cards).effective_hand_strength()[0]
+        if len(self.comm_cards) == 5:
+            chance = self.hs[0]
+        else:
+            chance = self.ehs[0]
         if chance > 0.8:
             return "raise"
         elif chance > 0.5:

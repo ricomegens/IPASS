@@ -1,8 +1,9 @@
 from itertools import combinations
 import cards
 
-def opp_starts(own_cards, comm_cards, deck):
+def opp_starts(own_cards, comm_cards):
     known = own_cards + comm_cards
+    deck = cards.deck()
     for card in known:
         if card in deck:
             deck.remove(card)
@@ -10,22 +11,23 @@ def opp_starts(own_cards, comm_cards, deck):
     combi = [list(combi) for combi in combis]
     return combi
 
-def potential_full_table(own_cards, opp_cards, comm_cards, deck):
-    amount_of_cards_to_come = 5 - len(comm_cards)
-    known_cards = own_cards + comm_cards
-    for card in known_cards:
-        if card in deck:
-            deck.remove(card)
-    deck_copy = deck.copy()
-    for card in opp_cards:
-        if card in deck:
-            deck_copy.remove(card)
-    cards_to_come = list(combinations(deck_copy, amount_of_cards_to_come))
-    combis = [list(card) for card in cards_to_come]
-    return combis
+# def potential_full_table(own_cards, opp_cards, comm_cards, deck):
+#     amount_of_cards_to_come = 5 - len(comm_cards)
+#     known_cards = own_cards + comm_cards
+#     for card in known_cards:
+#         if card in deck:
+#             deck.remove(card)
+#     deck_copy = deck.copy()
+#     for card in opp_cards:
+#         if card in deck:
+#             deck_copy.remove(card)
+#     cards_to_come = list(combinations(deck_copy, amount_of_cards_to_come))
+#     combis = [list(card) for card in cards_to_come]
+#     return combis
 
-def cards_left(own_cards, opp_cards, comm_cards, deck):
+def cards_left(own_cards, opp_cards, comm_cards):
     known_cards = own_cards + comm_cards
+    deck = cards.deck()
     for card in known_cards:
         if card in deck:
             deck.remove(card)
