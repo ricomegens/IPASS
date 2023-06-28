@@ -11,9 +11,9 @@ class GUI():
         self.game = poker.Poker()
 
         self.window = customtkinter.CTk()
-        self.window.title = "Poker simulation"
+        self.window.title("Poker simulation")
         self.window.geometry("600x400")
-        customtkinter.set_appearance_mode("red")
+        customtkinter.set_appearance_mode("light")
 
         self.opp_hand()
         self.hand()

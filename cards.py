@@ -12,7 +12,7 @@ def deck():
         returns a list of classes object
 
         Returns:
-        list: Returns shuffled list
+        list: Returns list with members of class Card
     """
     suits = {"h", "d", "c", "s"}
     values = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"}
