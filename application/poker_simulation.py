@@ -3,7 +3,7 @@ from classes import player, poker
 from algorithm import evaluate, expectiminimax
 
 
-class GUI():
+class GUI:
     def __init__(self):
         self.players()
         self.game = poker.Poker()
