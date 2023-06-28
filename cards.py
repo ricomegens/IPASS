@@ -24,6 +24,8 @@ def deck():
         for value in values:
             full_deck.append(Card(suit, value, ranking))
             ranking += 1
-    # Shuffle the list and return it
-    random.shuffle(full_deck)
     return full_deck
+
+def shuffled_deck(deck):
+    # Shuffle the list and return it
+    return random.shuffle(deck)
