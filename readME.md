@@ -9,6 +9,7 @@ combination of cards the opponent may have.
 
 # Application
 The project application can be run by running main.py. Here you can run the simulation step from step and start or reset a new game after.
+In the main file it is also possible to compute calculations.
 
 # Algorithm
 The application works based on an algorithm called expectiminimax. In this algorithm we have 2 players taking turns playing
