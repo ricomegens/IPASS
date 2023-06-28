@@ -10,7 +10,7 @@ class TestCards(unittest.TestCase):
         self.assertEqual(card1.value, f"a")
     def testRanking(self):
         card1 = Card("s", "a", 14)
-        self.assertEqual(card1.ranking, f"{14}")
+        self.assertEqual(card1.ranking, 14)
 
 
 if __name__ == "__main__":
