@@ -160,19 +160,19 @@ def expectiminimax(hand, comm_cards, deck):
         string: Returns action to be done by player
     """
     if len(comm_cards) == 5:
-        chance = hand_strength(hand, comm_cards, deck)[0]
+        chance = hand_strength(hand, comm_cards, deck)
     else:
-        chance = effective_hand_strength(hand, comm_cards, deck)[0]
-    if chance > 0.8:
-        return "raise"
-    elif chance > 0.5:
-        return "check"
+        chance = effective_hand_strength(hand, comm_cards, deck)
+    if chance[0] > 0.8:
+        return "raise", chance[0], chance[1], chance[2], chance[3]
+    elif chance[0] > 0.5:
+        return "check", chance[0], chance[1], chance[2], chance[3]
     else:
-        return "fold"
+        return "fold", chance[0], chance[1], chance[2], chance[3]
 
 if __name__ == "__main__":
     deck = cards.deck()
     hand = [deck[5], deck[40]]
     comm_cards = [deck[20], deck[13], deck[15]]
-    print(own_hand_calculator(hand, comm_cards, deck))
+    # print(own_hand_calculator(hand, comm_cards, deck))
     print(effective_hand_strength(hand, comm_cards, deck))
