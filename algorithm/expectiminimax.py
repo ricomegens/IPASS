@@ -1,6 +1,5 @@
-import cards_calculator
-import evaluate
-import cards
+from algorithm import evaluate, cardsCalculator
+
 
 def hand_strength(hand, comm_cards, deck):
     """
@@ -23,7 +22,7 @@ def hand_strength(hand, comm_cards, deck):
     ourrank = evaluate.rank(hand, comm_cards)
 
     # calculate every possible opponent hand
-    all_possible_oppcards = cards_calculator.opp_starts(hand, comm_cards, deck)
+    all_possible_oppcards = cardsCalculator.opp_starts(hand, comm_cards, deck)
     for opp_start in all_possible_oppcards:
         # while you loop through these hand, check how your hand stand against their possible hand
         opprank = evaluate.rank(opp_start, comm_cards)
@@ -59,7 +58,7 @@ def effective_hand_strength(hand, comm_cards, deck):
     HPTotal = [0, 0, 0]  # Initialize to 0
     ourrank = evaluate.rank(hand, comm_cards)
     # calculate every possible opponent hand
-    all_opp_starts = cards_calculator.opp_starts(hand, comm_cards, deck)
+    all_opp_starts = cardsCalculator.opp_starts(hand, comm_cards, deck)
     for oppcards in all_opp_starts:
         # while you loop through these hand, check how your hand stand against their possible hand
         opprank = evaluate.rank(oppcards, comm_cards)
@@ -78,7 +77,7 @@ def effective_hand_strength(hand, comm_cards, deck):
 
         # check what cards can still come in to play and if your best with these cards
         # will beat their best
-        remaing_cards = cards_calculator.cards_left(hand, oppcards, comm_cards, deck)
+        remaing_cards = cardsCalculator.cards_left(hand, oppcards, comm_cards, deck)
         ourbest = evaluate.rank(hand, remaing_cards)
         oppbest = evaluate.rank(oppcards, remaing_cards)
         if ourbest[0] > oppbest[0]:
@@ -128,9 +127,9 @@ def own_hand_calculator(hand, comm_cards, deck):
     ahead = tied = behind = 0
 
     # calculate every possible opponent hand
-    all_possible_oppcards = cards_calculator.opp_starts(hand, comm_cards, deck)
+    all_possible_oppcards = cardsCalculator.opp_starts(hand, comm_cards, deck)
     for opp_start in all_possible_oppcards:
-        all_possible_board_combis = cards_calculator.potential_full_table(hand, opp_start, comm_cards, deck)
+        all_possible_board_combis = cardsCalculator.potential_full_table(hand, opp_start, comm_cards, deck)
         # print(len(all_possible_board_combis))
         for possible_board_combi in all_possible_board_combis:
             whole_potential_board = comm_cards + possible_board_combi
@@ -169,10 +168,3 @@ def expectiminimax(hand, comm_cards, deck):
         return "check", chance[0], chance[1], chance[2], chance[3]
     else:
         return "fold", chance[0], chance[1], chance[2], chance[3]
-
-if __name__ == "__main__":
-    deck = cards.deck()
-    hand = [deck[5], deck[40]]
-    comm_cards = [deck[20], deck[13], deck[15]]
-    # print(own_hand_calculator(hand, comm_cards, deck))
-    print(effective_hand_strength(hand, comm_cards, deck))

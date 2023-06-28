@@ -1,6 +1,6 @@
-import algorithm
 import unittest
-import cards
+from classes import cards
+
 
 class TestAlgorithm(unittest.TestCase):
     def testHandStrength(self):

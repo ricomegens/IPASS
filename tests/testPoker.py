@@ -1,5 +1,5 @@
-from poker import Poker
-from player import Player
+from classes.poker import Poker
+from classes.player import Player
 import unittest
 
 class TestPoker(unittest.TestCase):

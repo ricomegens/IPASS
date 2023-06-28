@@ -1,6 +1,4 @@
-import cards
-import player as pl
-
+from classes import cards
 
 class Poker:
     def __init__(self):
@@ -70,12 +68,4 @@ class Poker:
             cut = self.pot / len(players)
             player.update_money(cut)
         self.reset_pot()
-
-
-if __name__ == "__main__":
-    player1 = pl.Player("Rico")
-    player2 = pl.Player("Luffy")
-    game = Poker()
-    game.add_player(player1)
-    game.add_player(player2)
 

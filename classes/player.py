@@ -6,21 +6,18 @@ class Player:
 
     def update_money(self, value):
         """
-            Function that returns True if addition succesfull.
+            Function that adds value to member attribute money.
         """
         self.money += value
 
     def update_hand(self, card):
         """
-            Function that returns True if object added to list.
+            Function that appends member of class Card to member's attribute hand.
         """
         self.hand.append(card)
 
     def reset_hand(self):
         """
-            Function that returns True if list was cleared.
+            Function that clears member's hand.
         """
         self.hand.clear()
-
-if __name__ == "__main__":
-    player1 = Player("Rico")

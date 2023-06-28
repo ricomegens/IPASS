@@ -27,6 +27,15 @@ def deck():
     return full_deck
 
 def shuffled_deck(deck):
+    """
+        Function that shuffles argument
+
+        Args:
+        deck (list): list with members of class that represent cards in play
+
+        Returns:
+        list: Returns list with members of class Card that is shuffled
+    """
     # Shuffle the list and return it
     random.shuffle(deck)
     return deck

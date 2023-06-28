@@ -1,6 +1,6 @@
-from cards import Card
-from player import Player
-import evaluate
+from classes.cards import Card
+from classes.player import Player
+from algorithm import evaluate
 import unittest
 
 class TestEvaluate(unittest.TestCase):

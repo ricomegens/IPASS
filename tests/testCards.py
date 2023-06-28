@@ -1,4 +1,4 @@
-from cards import Card
+from classes.cards import Card
 import unittest
 
 class TestCards(unittest.TestCase):

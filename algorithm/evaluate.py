@@ -1,5 +1,3 @@
-import cards
-
 def royal_flush(suits, values):
     """
         Function that returns boolean if list values corresponds

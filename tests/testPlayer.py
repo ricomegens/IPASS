@@ -1,5 +1,5 @@
-from player import Player
-from cards import Card
+from classes.player import Player
+from classes.cards import Card
 import unittest
 
 class TestPlayer(unittest.TestCase):
