@@ -28,4 +28,5 @@ def deck():
 
 def shuffled_deck(deck):
     # Shuffle the list and return it
-    return random.shuffle(deck)
+    random.shuffle(deck)
+    return deck
