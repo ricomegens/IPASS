@@ -38,7 +38,7 @@ class Poker:
             player.reset_hand()
 
     def create_deck(self):
-        self.deck = cards.deck()
+        self.deck = cards.shuffled_deck(cards.deck())
 
     def deal_comm_cards(self, num_cards):
         for card in range(num_cards):

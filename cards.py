@@ -8,8 +8,8 @@ class Card:
 
 def deck():
     """
-        Function that created class object, adds them to a list and
-        returns a shuffled list of classes object
+        Function that creates class object, adds them to a list and
+        returns a list of classes object
 
         Returns:
         list: Returns shuffled list
