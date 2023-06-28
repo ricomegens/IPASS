@@ -1,7 +1,19 @@
 from itertools import combinations
 import cards
 
+
 def opp_starts(own_cards, comm_cards):
+    """
+        Function that returns a list off all possible combination of cards the
+        opponents player may have
+
+        Args:
+        own_cards (list): list of members of class Card that belong to own hand
+        comm_cards (list): list of members of class Card that are community cards
+
+        Returns:
+        list: Returns list of cards combinations
+    """
     known = own_cards + comm_cards
     deck = cards.deck()
     for card in known:
@@ -26,20 +38,29 @@ def opp_starts(own_cards, comm_cards):
 #     return combis
 
 def cards_left(own_cards, opp_cards, comm_cards):
+    """
+        Function that returns the list of the remaining cards after removing all
+        the known cards (your own hand and community cards) and possible opponent hand
+
+        Args:
+        own_cards (list): list of members of class Card that belong to own hand
+        opp_cards (list): list of members of class Card that the opponent may hold
+        comm_cards (list): list of members of class Card that are community cards
+
+        Returns:
+        list: Returns list with cards remaining
+    """
+    # make a list of all the known cards and remove them from the deck
     known_cards = own_cards + comm_cards
     deck = cards.deck()
     for card in known_cards:
         if card in deck:
             deck.remove(card)
+    # copy the deck so when we remove the potential opponent hand's it
+    # does not actually remove the cards
+    # remove the opponent's hand and return the deck
     deck_copy = deck.copy()
     for card in opp_cards:
         if card in deck:
             deck_copy.remove(card)
     return deck_copy
-
-if __name__ == "__main__":
-    dk = cards.deck()
-    player_hand = [dk[30], dk[8]]
-    community = [dk[12], dk[49], dk[21]]
-    opp = opp_starts(player_hand, community, dk)
-    print(len(potential_full_table(player_hand, opp[0], community, dk)))
