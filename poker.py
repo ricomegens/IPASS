@@ -19,8 +19,11 @@ class Poker:
         self.pot = 0
 
     def add_player(self, player):
-        self.players.append(player)
-        return True
+        if player not in self.players:
+            self.players.append(player)
+            return True
+        else:
+            return False
 
     def remove_player(self, player):
         if player in self.players:
